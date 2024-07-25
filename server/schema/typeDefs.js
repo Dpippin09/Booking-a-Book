@@ -1,5 +1,4 @@
-// Define the necessary Query and Mutation types:
-const typeDefs = gql`
+const typeDefs = `
 
  type Query {
     me: [User] 
@@ -25,7 +24,7 @@ type Book {
     image: String
     link: String
 }
-// Auth type:
+
 type Auth {
     token: ID!
     user: User
