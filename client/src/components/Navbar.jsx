@@ -16,8 +16,8 @@ const AppNavbar = () => {
             Fashion Accessories Search
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar" />
-          <Navbar.Collapse id="navbar" className="d-flex flex-row-reverse">
-            <Nav className="ml-auto d-flex">
+          <Navbar.Collapse id="navbar">
+            <Nav className="ms-auto d-flex align-items-center">
               <Nav.Link as={Link} to="/">
                 Search For Fashion Items
               </Nav.Link>
@@ -29,7 +29,10 @@ const AppNavbar = () => {
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>
+                <Nav.Link
+                  className="login-signup-btn"
+                  onClick={() => setShowModal(true)}
+                >
                   Login/Sign Up
                 </Nav.Link>
               )}
