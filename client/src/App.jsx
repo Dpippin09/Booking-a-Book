@@ -6,8 +6,10 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { Outlet } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import SearchFashionItems from "./pages/SearchFashionItems";
+import SavedFashionItems from "./pages/SavedFashionItems";
 
 // Get the GraphQL endpoint from environment variables
 const GRAPHQL_ENDPOINT =
@@ -20,9 +22,7 @@ const httpLink = createHttpLink({
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header.
 const authLink = setContext((_, { headers }) => {
-  // Get the authentication token from local storage if it exists.
   const token = localStorage.getItem("id_token");
-  // Return the headers to the context so httpLink can read them.
   return {
     headers: {
       ...headers,
@@ -31,22 +31,21 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// Define the custom cache with merge function.
+// Define the custom cache with merge function for savedFashionItems.
 const cache = new InMemoryCache({
   typePolicies: {
     User: {
       fields: {
-        savedBooks: {
+        savedFashionItems: {
           merge(existing = [], incoming = []) {
-            const existingBooks = new Map(
-              existing.map((book) => [book.bookId, book])
+            const existingItems = new Map(
+              existing.map((item) => [item.itemId, item])
             );
-            const incomingBooks = new Map(
-              incoming.map((book) => [book.bookId, book])
+            const incomingItems = new Map(
+              incoming.map((item) => [item.itemId, item])
             );
-
-            // Combine the books, favoring incoming data in case of conflicts.
-            return [...existingBooks.values(), ...incomingBooks.values()];
+            // Combine the items, favoring incoming data in case of conflicts.
+            return [...existingItems.values(), ...incomingItems.values()];
           },
         },
       },
@@ -56,7 +55,6 @@ const cache = new InMemoryCache({
 
 // Create Apollo Client instance with the custom cache.
 const client = new ApolloClient({
-  // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API.
   link: authLink.concat(httpLink),
   cache,
 });
@@ -64,8 +62,13 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Navbar />
-      <Outlet />
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<SearchFashionItems />} />
+          <Route path="/saved" element={<SavedFashionItems />} />
+        </Routes>
+      </Router>
     </ApolloProvider>
   );
 }

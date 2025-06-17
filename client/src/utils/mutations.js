@@ -1,5 +1,5 @@
-// Import the gql tagged template literal from @apollo/client to define the queries.
 import { gql } from "@apollo/client";
+
 // LOGIN_USER will execute the loginUser mutation set up using Apollo Server.
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
@@ -9,19 +9,19 @@ export const LOGIN_USER = gql`
         _id
         username
         email
-        bookCount
-        savedBooks {
-          bookId
-          authors
-          description
+        savedFashionItems {
+          itemId
           title
+          category
+          description
           image
-          link
+          price
         }
       }
     }
   }
 `;
+
 // ADD_USER will execute the addUser mutation.
 export const ADD_USER = gql`
   mutation addUser($username: String!, $email: String!, $password: String!) {
@@ -31,68 +31,59 @@ export const ADD_USER = gql`
         _id
         username
         email
-        bookCount
-        savedBooks {
-          bookId
-          authors
-          description
+        savedFashionItems {
+          itemId
           title
+          category
+          description
           image
-          link
+          price
         }
       }
     }
   }
 `;
-// SAVE_BOOK will execute the saveBook mutation.
-export const SAVE_BOOK = gql`
-  mutation SaveBook(
-    $authors: [String]
+
+// SAVE_FASHION_ITEM will execute the saveFashionItem mutation.
+export const SAVE_FASHION_ITEM = gql`
+  mutation saveFashionItem(
+    $itemId: ID!
+    $title: String!
+    $category: String
     $description: String
-    $title: String
-    $bookId: String
     $image: String
-    $link: String
+    $price: Float
   ) {
-    saveBook(
-      authors: $authors
-      description: $description
-      title: $title
-      bookId: $bookId
-      image: $image
-      link: $link
-    ) {
-      _id
-      username
-      email
-      bookCount
-      savedBooks {
-        bookId
-        authors
-        description
-        title
-        image
-        link
+    saveFashionItem(
+      itemData: {
+        itemId: $itemId
+        title: $title
+        category: $category
+        description: $description
+        image: $image
+        price: $price
       }
+    ) {
+      itemId
+      title
+      category
+      description
+      image
+      price
     }
   }
 `;
-// REMOVE_BOOK will execute the removeBook mutation.
-export const REMOVE_BOOK = gql`
-  mutation removeBook($bookId: String!) {
-    removeBook(bookId: $bookId) {
-      _id
-      username
-      email
-      bookCount
-      savedBooks {
-        bookId
-        authors
-        description
-        title
-        image
-        link
-      }
+
+// REMOVE_FASHION_ITEM will execute the removeFashionItem mutation.
+export const REMOVE_FASHION_ITEM = gql`
+  mutation removeFashionItem($itemId: ID!) {
+    removeFashionItem(itemId: $itemId) {
+      itemId
+      title
+      category
+      description
+      image
+      price
     }
   }
 `;

@@ -1,57 +1,67 @@
-// // route to get logged in user's info (needs the token)
-// export const getMe = (token) => {
-//   return fetch('/api/users/me', {
-//     headers: {
-//       'Content-Type': 'application/json',
-//       authorization: `Bearer ${token}`,
-//     },
-//   });
-// };
+// Get logged in user's info (requires token)
+export const getMe = (token) => {
+  return fetch('/api/users/me', {
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
 
-// export const createUser = (userData) => {
-//   return fetch('/api/users', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(userData),
-//   });
-// };
+// Register a new user
+export const createUser = (userData) => {
+  return fetch('/api/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  });
+};
 
-// export const loginUser = (userData) => {
-//   return fetch('/api/users/login', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(userData),
-//   });
-// };
+// Log in a user
+export const loginUser = (userData) => {
+  return fetch('/api/users/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  });
+};
 
-// // save book data for a logged in user
-// export const saveBook = (bookData, token) => {
-//   return fetch('/api/users', {
-//     method: 'PUT',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       authorization: `Bearer ${token}`,
-//     },
-//     body: JSON.stringify(bookData),
-//   });
-// };
+// Save a fashion item for a logged in user
+export const saveFashionItem = (itemData, token) => {
+  return fetch('/api/users', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(itemData),
+  });
+};
 
-// // remove saved book data for a logged in user
-// export const deleteBook = (bookId, token) => {
-//   return fetch(`/api/users/books/${bookId}`, {
-//     method: 'DELETE',
-//     headers: {
-//       authorization: `Bearer ${token}`,
-//     },
-//   });
-// };
+// Remove a saved fashion item for a logged in user
+export const deleteFashionItem = (itemId, token) => {
+  return fetch(`/api/users/fashion/${itemId}`, {
+    method: 'DELETE',
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
 
-// // make a search to google books api
-// // https://www.googleapis.com/books/v1/volumes?q=harry+potter
-export const searchGoogleBooks = (query) => {
-  return fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+// Search for fashion items using fakestoreapi.com
+export const searchFashionItems = (query) => {
+  // Fetch all products and filter by query in JS.
+  // You can replace this with a real search endpoint if available.
+  return fetch('https://fakestoreapi.com/products')
+    .then(res => res.json())
+    .then(items =>
+      items.filter(item =>
+        item.title.toLowerCase().includes(query.toLowerCase()) ||
+        item.category.toLowerCase().includes(query.toLowerCase())
+      )
+    );
 };
