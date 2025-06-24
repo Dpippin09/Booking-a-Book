@@ -17,21 +17,25 @@ const AppNavbar = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar">
-            <Nav className="ms-auto d-flex align-items-center">
+            <Nav className="align-items-center w-100">
               <Nav.Link as={Link} to="/">
                 Search For Fashion Items
               </Nav.Link>
-              {Auth.loggedIn() ? (
+              {Auth.loggedIn() && (
                 <>
                   <Nav.Link as={Link} to="/saved">
                     See Your Saved Items
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
-              ) : (
+              )}
+              {/* Spacer to push the Login/Sign Up button to the right */}
+              {!Auth.loggedIn() && <div className="flex-grow-1"></div>}
+              {!Auth.loggedIn() && (
                 <Nav.Link
-                  className="login-signup-btn"
+                  className="login-signup-btn ms-auto"
                   onClick={() => setShowModal(true)}
+                  style={{ marginLeft: "auto" }}
                 >
                   Login/Sign Up
                 </Nav.Link>
@@ -75,4 +79,4 @@ const AppNavbar = () => {
   );
 };
 
-export default AppNavbar;
+export default Navbar;

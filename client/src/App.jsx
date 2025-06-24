@@ -7,7 +7,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import AppNavbar from "./components/Navbar";
 import SearchFashionItems from "./pages/SearchFashionItems";
 import SavedFashionItems from "./pages/SavedFashionItems";
 
@@ -63,7 +63,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <Navbar />
+        <AppNavbar />
         <Routes>
           <Route path="/" element={<SearchFashionItems />} />
           <Route path="/saved" element={<SavedFashionItems />} />
