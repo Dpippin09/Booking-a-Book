@@ -19,7 +19,7 @@ const AppNavbar = () => {
           <Navbar.Collapse id="navbar">
             <Nav className="align-items-center w-100">
               <Nav.Link as={Link} to="/">
-                Search For Fashion Items
+                Snatched It!
               </Nav.Link>
               {Auth.loggedIn() && (
                 <>

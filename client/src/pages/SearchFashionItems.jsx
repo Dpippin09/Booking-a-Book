@@ -31,7 +31,7 @@ const SearchFashionItems = () => {
     <>
       <div className="text-light bg-dark p-5 text-center">
         <Container>
-          <h1>Search for Fashion Accessories!</h1>
+          <h1 className="snatched-title">Snatched It!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Row className="justify-content-center">
               <Col xs={12} md={8}>
